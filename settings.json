@@ -2,26 +2,20 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": {
-          "toolName": "Edit|Write",
-          "filePath": "**/*.kt"
-        },
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "cd backend && ./gradlew ktlintFormat -PktlintFile=\"$CLAUDE_FILE_PATH\" --quiet 2>/dev/null; true"
+            "command": "case \"$CLAUDE_FILE_PATH\" in *.kt) cd backend && ./gradlew ktlintFormat -PktlintFile=\"$CLAUDE_FILE_PATH\" --quiet 2>/dev/null; true ;; esac"
           }
         ]
       },
       {
-        "matcher": {
-          "toolName": "Edit|Write",
-          "filePath": "**/*.{ts,tsx,js,jsx}"
-        },
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "cd frontend && npx prettier --write \"$CLAUDE_FILE_PATH\" --log-level silent 2>/dev/null; true"
+            "command": "case \"$CLAUDE_FILE_PATH\" in *.ts|*.tsx|*.js|*.jsx) cd frontend && npx prettier --write \"$CLAUDE_FILE_PATH\" --log-level silent 2>/dev/null; true ;; esac"
           }
         ]
       }
