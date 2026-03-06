@@ -32,7 +32,7 @@ $ARGUMENTS
 - `--from` 인자가 있으면 해당 티켓 1개만 조회 (복제 모드)
 - 아무것도 없으면:
   1. `mcp__atlassian__searchJiraIssuesUsingJql`로 최근 완료 티켓 3-5개 조회
-     - JQL: `project = LAD AND status = Done ORDER BY updated DESC`
+     - JQL: `project = SCRUM AND status = Done ORDER BY updated DESC`
   2. 조회된 티켓들을 참조 패턴으로 사용
 
 #### 1-2. 각 참조 티켓에서 추출할 요소
@@ -103,14 +103,24 @@ $ARGUMENTS
 →
 ```
 
-**[Q6] 에픽 연결** — 참조 티켓에서 에픽이 감지된 경우 확인, 없으면 질문
+**[Q6] 에픽 연결 (필수)** — 에픽은 반드시 있어야 한다. 있으면 기존 에픽에 연결, 없으면 새로 생성.
+
+**에픽 자동 탐색**: 먼저 프로젝트에서 관련 에픽을 자동 검색한다.
+1. `mcp__jira__jira_get`으로 프로젝트 에픽 목록 조회 (JQL: `project = SCRUM AND issuetype = 에픽 AND status != Done`)
+2. 티켓 제목/내용과 기존 에픽명을 비교하여 관련 에픽 후보를 제시
+
 ```
-🗂️  연결할 에픽이 있으면 에픽 ID를 입력해주세요.
-   (감지된 에픽: [에픽명] [에픽ID] / 없으면 새 에픽 자동 생성)
-→
+🗂️  [필수] 에픽을 선택해주세요:
+   감지된 관련 에픽:
+     1) SCRUM-154 - 백테스트 엔진
+     2) SCRUM-156 - 전략 관리
+     3) (새 에픽 생성)
+   → 번호 또는 에픽 ID 입력:
 ```
-- 에픽 ID를 입력하면 해당 에픽에 연결
-- **입력 없이 건너뛰면 새 에픽을 자동 생성**: 티켓 제목/내용 기반으로 에픽명 추론 후 `mcp__atlassian__createJiraIssue`로 에픽 먼저 생성, 이후 스토리에 `parent`로 연결
+
+- 번호/에픽 ID 입력 → 해당 에픽에 연결
+- **(새 에픽 생성) 선택 또는 관련 에픽이 없는 경우 → 새 에픽 자동 생성**: 티켓 제목/내용 기반으로 에픽명 추론 후 `mcp__jira__jira_post`로 에픽 먼저 생성 (issuetype: "에픽"), 이후 스토리에 에픽 링크 연결
+- **에픽 없이 티켓을 생성하지 않는다** — 에픽 연결은 필수 단계
 
 **[Q7] 기타 메모**
 ```
@@ -188,19 +198,21 @@ $ARGUMENTS
 
 ### 단계 3: Jira 티켓 생성
 
-#### 3-1. 에픽 처리 (스토리 생성 전)
+#### 3-1. 에픽 처리 (필수 - 스토리 생성 전)
+에픽 없이 티켓을 생성하지 않는다. 반드시 에픽이 연결되어야 한다.
+
 - [Q6]에서 기존 에픽 ID가 입력된 경우 → 해당 에픽 사용
-- **입력 없는 경우 → 에픽 자동 생성**:
+- **기존 에픽이 없는 경우 → 에픽 자동 생성**:
   1. 티켓 제목/내용 기반으로 에픽명을 **간결하고 명확하게** 추론
      - 좋은 예: `[Backend] Swagger API 문서화`, `[Frontend] 코스 결과 UI`, `[공통] 인증 시스템`
      - 나쁜 예: `## 개요\n\n백엔드 REST API의...` (설명 텍스트를 그대로 사용 금지)
      - 규칙: 10~30자 이내, prefix([Backend]/[Frontend]/[공통]) 포함, 기능 단위로 명명
-  2. `mcp__atlassian__createJiraIssue`로 에픽 먼저 생성 (issueTypeName: "에픽")
-  3. 생성된 에픽 ID를 스토리의 `parent`로 사용
+  2. `mcp__jira__jira_post`로 에픽 먼저 생성 (issuetype: "에픽")
+  3. 생성된 에픽 key를 스토리의 에픽 링크(`customfield_10014`)에 설정
 
 #### 3-2. 티켓 생성
 `mcp__atlassian__createJiraIssue`로 스토리 생성:
-- 프로젝트: `LAD` (lian-ai-date)
+- 프로젝트: `SCRUM`
 - 위에서 구성한 모든 필드 포함
 - 에픽 연결: 생성 후 `mcp__atlassian__editJiraIssue`로 `parent` 필드에 에픽 key 설정
 
