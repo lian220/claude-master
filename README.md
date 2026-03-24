@@ -56,7 +56,6 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 | **skill-creator** | "스킬 만들어", "skill 생성" | 새로운 Claude 스킬 생성 가이드 |
 | **slash-command-creator** | "커맨드 만들어", "command 생성" | 새로운 슬래시 커맨드 생성 가이드 |
 | **hook-creator** | "훅 만들어", "hook 설정" | Claude Code 훅 생성/설정 가이드 |
-| **expert-panel** | "전문가 리뷰", "패널 리뷰", "다각도 검토" | 분야별 전문가 패널 병렬 리뷰 (트렌드 리서치 포함) |
 
 ---
 
@@ -70,6 +69,7 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 |--------|--------|------|
 | **/dev-cycle** | `/dev-cycle LAD-42` | 3단계 전체 개발 사이클 (설계→TDD→검증+PR) |
 | **/agent-teams** | `/agent-teams review` | 여러 에이전트 병렬 실행으로 다각도 분석 |
+| **/expert-panel** | `/expert-panel "주제"` | 전문가 패널 병렬 리뷰 (트렌드 리서치 포함) |
 
 **`/agent-teams` 프리셋**:
 - `review` — code-reviewer + security-sentinel + debugger (PR 전 종합 리뷰)
