@@ -17,6 +17,28 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 | **@performance-profiler** | JVM/SQL/API 성능 분석 및 최적화 | 느린 API, 성능 이슈 시 |
 | **@test-generator** | 레이어별 테스트 자동 생성 (Domain→UseCase→Controller) | 커버리지 보강 시 |
 
+### Expert Panel 전문가 에이전트
+
+최신 트렌드를 리서치한 뒤 전문가 관점으로 분석하는 에이전트입니다. `/expert-panel` 스킬에서 병렬 호출되거나, `@에이전트명`으로 개별 호출할 수 있습니다.
+
+| 패널 | 에이전트 | 설명 |
+|------|----------|------|
+| **ui** | @expert-ui-ux-designer | 사용성, 접근성, 인터랙션 패턴 |
+| | @expert-visual-designer | 컬러, 타이포, 레이아웃 일관성 |
+| | @expert-ia-specialist | 정보 구조, 네비게이션 플로우 |
+| **frontend** | @expert-frontend-architect | 컴포넌트 설계, 상태관리 |
+| | @expert-frontend-performance | 번들 사이즈, Core Web Vitals |
+| | @expert-a11y-specialist | WCAG, 스크린리더 호환 |
+| **backend** | @expert-backend-architect | 도메인 설계, Hexagonal, CQRS |
+| | @expert-security | OWASP, 인증/인가, 취약점 |
+| | @expert-db-performance | 쿼리 최적화, 인덱싱, 캐싱 |
+| **infra** | @expert-devops | CI/CD, 배포 전략, 모니터링 |
+| | @expert-cloud-architect | 비용 최적화, 확장성, HA |
+| | @expert-sre | 장애 대응, 옵저버빌리티 |
+| **business** | @expert-strategy | PMF, 비즈니스 모델, 경쟁 분석 |
+| | @expert-marketing | 전환율, CTA, 퍼널 설계 |
+| | @expert-pm-planner | 사용자 스토리, 요구사항 검증 |
+
 ---
 
 ## Skills (스킬)
@@ -34,6 +56,7 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 | **skill-creator** | "스킬 만들어", "skill 생성" | 새로운 Claude 스킬 생성 가이드 |
 | **slash-command-creator** | "커맨드 만들어", "command 생성" | 새로운 슬래시 커맨드 생성 가이드 |
 | **hook-creator** | "훅 만들어", "hook 설정" | Claude Code 훅 생성/설정 가이드 |
+| **expert-panel** | "전문가 리뷰", "패널 리뷰", "다각도 검토" | 분야별 전문가 패널 병렬 리뷰 (트렌드 리서치 포함) |
 
 ---
 
@@ -107,6 +130,13 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 /agent-teams review          # 코드리뷰 + 보안 + 버그 병렬 분석
 ```
 
+### 전문가 패널 리뷰
+```
+/expert-panel "랜딩페이지 전환율 개선"           # 자동으로 적합한 전문가 추천
+/expert-panel --panels "frontend,business" "검토"  # 패널 단위 지정
+/expert-panel --experts "ux,marketing" "검토"      # 전문가 직접 지정
+```
+
 ### 성능 이슈 대응
 ```
 @performance-profiler        # 성능 측정 + 분석 + 최적화 제안
@@ -136,7 +166,8 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 │   ├── debugger.md              # 디버깅 에이전트
 │   ├── security-sentinel.md     # 보안 감사 에이전트
 │   ├── performance-profiler.md  # 성능 분석 에이전트
-│   └── test-generator.md        # 테스트 생성 에이전트
+│   ├── test-generator.md        # 테스트 생성 에이전트
+│   └── expert-*.md              # Expert Panel 전문가 에이전트 (15개)
 ├── commands/
 │   ├── dev-cycle.md             # 3단계 개발 사이클
 │   ├── agent-teams.md           # 병렬 에이전트 실행
@@ -156,7 +187,8 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 │   ├── youtube-collector/       # 유튜브 수집
 │   ├── skill-creator/           # 스킬 생성 가이드
 │   ├── slash-command-creator/   # 커맨드 생성 가이드
-│   └── hook-creator/            # 훅 생성 가이드
+│   ├── hook-creator/            # 훅 생성 가이드
+│   └── expert-panel/            # 전문가 패널 리뷰 스킬
 └── learnings/                   # (continuous-learning이 생성)
     ├── patterns.md
     ├── decisions.md
