@@ -70,6 +70,7 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 | **/dev-cycle** | `/dev-cycle LAD-42` | 3단계 전체 개발 사이클 (설계→TDD→검증+PR) |
 | **/agent-teams** | `/agent-teams review` | 여러 에이전트 병렬 실행으로 다각도 분석 |
 | **/expert-panel** | `/expert-panel "주제"` | 전문가 패널 병렬 리뷰 (트렌드 리서치 포함) |
+| **/mvp** | `/mvp "서비스 아이디어"` | 대화형 기획 + 전문가 패널 보강 → MVP 기획서 생성 |
 
 **`/agent-teams` 프리셋**:
 - `review` — code-reviewer + security-sentinel + debugger (PR 전 종합 리뷰)
