@@ -1,3 +1,8 @@
+---
+description: 분야별 전문가 에이전트를 병렬 실행해 최신 트렌드 기반 다각도 리뷰
+argument-hint: "[--experts a,b | --panels x,y | --all] <주제>"
+---
+
 # Expert Panel (전문가 패널 리뷰)
 
 **사용법**: `/expert-panel [옵션] [주제]`

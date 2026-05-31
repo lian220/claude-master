@@ -1,3 +1,8 @@
+---
+description: 변경사항 커밋 + Jira 티켓 진행 업데이트 (Conventional Commits)
+argument-hint: "<JIRA-KEY> [커밋메시지]"
+---
+
 # Jira 커밋 및 진행 업데이트
 
 **사용법**: `jira-commit LAD-42 [커밋메시지]`

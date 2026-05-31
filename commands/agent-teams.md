@@ -1,3 +1,8 @@
+---
+description: 여러 전문 에이전트를 병렬 실행해 다각도 분석 (review/fullstack/quality/debug 프리셋)
+argument-hint: "[review|fullstack|quality|debug] [대상]"
+---
+
 # Agent Teams (병렬 에이전트 실행)
 
 **사용법**: `/agent-teams [프리셋] [대상]`

@@ -1,3 +1,8 @@
+---
+description: 기존 티켓 패턴 분석 후 새 Jira 티켓 생성
+argument-hint: "\"<티켓 제목>\" [--ref KEY | --from KEY]"
+---
+
 # Jira 티켓 생성
 
 **사용법**:

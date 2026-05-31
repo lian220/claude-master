@@ -1,3 +1,8 @@
+---
+description: 개발 완료 후 통합 테스트 실행 + 결과 보고
+argument-hint: "[frontend|backend|e2e|all]"
+---
+
 # Jira 통합 테스트
 
 개발 완료 후 통합 테스트를 실행합니다.

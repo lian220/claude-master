@@ -1,3 +1,8 @@
+---
+description: Jira 티켓 시작 + 브랜치 생성 + 상태 변경
+argument-hint: "[JIRA-KEY] [브랜치명]"
+---
+
 # Jira 티켓 시작
 
 **사용법**:

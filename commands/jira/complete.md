@@ -1,3 +1,8 @@
+---
+description: 최종 검증 후 PR 생성/업데이트 + Jira 티켓 완료 처리
+argument-hint: "<JIRA-KEY>"
+---
+
 # Jira 티켓 완료
 
 **사용법**: `jira-complete LAD-42`

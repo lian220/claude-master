@@ -1,3 +1,8 @@
+---
+description: Jira 티켓 기반 3단계 개발 사이클 (설계 → TDD → 검증+PR)
+argument-hint: "<JIRA-KEY>  예: LAD-42"
+---
+
 # 개발 사이클 (3단계 워크플로우)
 
 **사용법**: `/dev-cycle LAD-42`
