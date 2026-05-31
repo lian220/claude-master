@@ -47,6 +47,8 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 
 | 스킬 | 트리거 키워드 | 설명 |
 |------|-------------|------|
+| **grill-me** | "그릴", "심문해줘", "스펙 잡자", "기획 구체화" | 코드 작성 전 한 질문씩 심문하여 요구사항 명세 완성 |
+| **grill-with-docs** | "그릴 도큐", "도메인 심문", "용어 정리", "ADR 정리" | 도메인 모델/문서(CONTEXT.md·ADR)에 대조하며 심문, 결정 인라인 기록 |
 | **tdd-workflow** | "구현해줘", "만들어줘", "추가해줘" | TDD Red→Green→Refactor 3단계 개발 가이드 |
 | **spring-boot-expert** | "Controller", "Service", "JPA", "Entity" | Spring Boot 3.x + Hexagonal Architecture 패턴 |
 | **load-testing** | "부하 테스트", "성능 테스트", "k6" | k6 기반 API 부하 테스트 스크립트 생성/실행 |
