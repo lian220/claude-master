@@ -94,8 +94,9 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 |--------|--------|------|
 | **/dev-cycle** | `/dev-cycle LAD-42` | 3단계 전체 개발 사이클 (설계→TDD→검증+PR) |
 | **/agent-teams** | `/agent-teams review` | 여러 에이전트 병렬 실행으로 다각도 분석 |
-| **/expert-panel** | `/expert-panel "주제"` | 전문가 패널 병렬 리뷰 (트렌드 리서치 포함) |
 | **/mvp** | `/mvp "서비스 아이디어"` | 대화형 기획 + 전문가 패널 보강 → MVP 기획서 생성 |
+
+> `/expert-panel`은 커맨드가 아니라 **스킬**이 제공합니다(`skills/expert-panel/`). 과거 커맨드 복제본이 같은 이름으로 이중 등록돼 있어 제거했습니다.
 
 **`/agent-teams` 프리셋**:
 - `review` — code-reviewer + security-sentinel + debugger (PR 전 종합 리뷰)
@@ -118,6 +119,7 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 | 커맨드 | 사용법 | 설명 |
 |--------|--------|------|
 | **/crystalize-prompt** | `/crystalize-prompt` | 프롬프트 압축 (토큰 절약) |
+| **/lock-architecture** | `/lock-architecture` | 프로젝트 기술 스택/아키텍처 결정 기록·잠금 |
 
 ---
 
@@ -202,27 +204,32 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 │   ├── performance-profiler.md  # 성능 분석 에이전트
 │   ├── test-generator.md        # 테스트 생성 에이전트
 │   └── expert-*.md              # Expert Panel 전문가 에이전트 (15개)
-├── commands/
+├── commands/                    # 전부 user-invoked
 │   ├── dev-cycle.md             # 3단계 개발 사이클
 │   ├── agent-teams.md           # 병렬 에이전트 실행
+│   ├── mvp.md                   # MVP 기획서 생성
 │   ├── crystalize-prompt.md     # 프롬프트 압축
+│   ├── lock-architecture.md     # 아키텍처 결정 잠금
 │   └── jira/
-│       ├── start.md             # 티켓 시작
+│       ├── start.md             # 티켓 시작 (절차 원본)
 │       ├── create.md            # 티켓 생성
 │       ├── commit.md            # 커밋 + Jira 업데이트
 │       ├── test.md              # 통합 테스트
-│       └── complete.md          # PR + 완료
+│       └── complete.md          # PR + 완료 (절차 원본)
 ├── skills/
-│   ├── tdd-workflow/            # TDD 개발 가이드
-│   ├── spring-boot-expert/      # Spring Boot 패턴
-│   ├── load-testing/            # k6 부하 테스트
-│   ├── quality-gate/            # 품질 게이트
-│   ├── continuous-learning/     # 세션 학습
-│   ├── youtube-collector/       # 유튜브 수집
-│   ├── skill-creator/           # 스킬 생성 가이드
-│   ├── slash-command-creator/   # 커맨드 생성 가이드
-│   ├── hook-creator/            # 훅 생성 가이드
-│   └── expert-panel/            # 전문가 패널 리뷰 스킬
+│   ├── tdd-workflow/            # TDD 개발 가이드          [model]
+│   ├── spring-boot-expert/      # Spring Boot 패턴          [model]
+│   ├── quality-gate/            # 품질 게이트               [model]
+│   ├── grill-me/                # 요구사항 심문             [user]
+│   ├── grill-with-docs/         # 도메인 심문 + 문서 갱신    [user]
+│   ├── expert-panel/            # 전문가 패널 리뷰          [user]
+│   ├── project-scaffolding/     # 프로젝트 구조 설계        [user]
+│   ├── load-testing/            # k6 부하 테스트            [user]
+│   ├── continuous-learning/     # 세션 학습                 [user]
+│   ├── youtube-collector/       # 유튜브 수집               [user]
+│   ├── skill-creator/           # 스킬 생성 가이드          [user]
+│   ├── slash-command-creator/   # 커맨드 생성 가이드        [user]
+│   └── hook-creator/            # 훅 생성 가이드            [user]
 └── learnings/                   # (continuous-learning이 생성)
     ├── patterns.md
     ├── decisions.md

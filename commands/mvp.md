@@ -91,7 +91,9 @@ Phase 7: 다음 단계 선택 (화면설계 / 기술설계 / 구현 / 끝)
 진행할까요? (추가/제거 가능)
 ```
 
-전문가 별칭은 `skills/expert-panel/references/panels.md` 참조.
+전문가 별칭은 `~/.claude/skills/expert-panel/references/panels.md` 참조.
+(저장소 상대 경로가 아니라 절대 경로로 읽는다. 이 커맨드는 사용자 프로젝트에서 실행되므로
+`skills/...` 상대 경로는 해석되지 않는다.)
 
 ### 디스패치
 

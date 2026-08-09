@@ -16,12 +16,25 @@ metadata:
 
 ## 사용법
 
+`/expert-panel [옵션] <주제>`
+
+| 옵션 | 동작 |
+|------|------|
+| `--experts "a,b,c"` | 전문가 직접 지정 (별칭 허용) |
+| `--panels "x,y"` | 패널 단위 지정 |
+| `--all` | 전체 15명 투입 |
+| 없음 | 주제 분석 후 자동 추천 |
+
 ```
 /expert-panel "결제 플로우가 복잡한 것 같아"              # 자동 추천
 /expert-panel --experts "security,ux,fe-arch" "인증 검토"  # 직접 지정
 /expert-panel --panels "frontend,business" "랜딩페이지"     # 패널 단위
+/expert-panel --panels "ui" "메인 화면 디자인"              # UI 패널만
 /expert-panel --all "서비스 런칭 전 종합 검토"              # 전체 투입
 ```
+
+> 이 스킬이 `/expert-panel` 의 **단일 출처**다. 과거 `commands/expert-panel.md` 에
+> 축약 복제본이 있었으나 같은 이름으로 이중 등록되어 제거했다. 다시 만들지 말 것.
 
 ## 실행 프로세스
 
