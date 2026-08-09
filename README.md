@@ -131,7 +131,7 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 |--------|------|------|
 | PreToolUse | `Bash` | 파괴적 명령 차단 (`hooks/guardrail-bash.sh`) |
 | PreToolUse | `Skill` | user-invoked 스킬 자동 발동 경고 (`hooks/guardrail-skill.py`) |
-| PreToolUse | `WebSearch/WebFetch` | 아키텍처 가이드 우선 규칙 주입 |
+| PreToolUse | `WebSearch/WebFetch` | 아키텍처 가이드 우선 규칙 주입 (`hooks/guardrail-websearch.py`). 검색어에 언어가 감지되면 해당 가이드를 지목 |
 | PostToolUse (Edit/Write) | `*.kt` | ktlint 자동 포맷 |
 | PostToolUse (Edit/Write) | `*.ts, *.tsx` | Prettier 자동 포맷 |
 
