@@ -68,17 +68,16 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 
 | 스킬 | 계층 | 트리거 키워드 | 설명 |
 |------|------|-------------|------|
-| **tdd-workflow** | model | "구현해줘", "만들어줘", "추가해줘" | TDD Red→Green→Refactor 3단계 개발 가이드 |
-| **spring-boot-expert** | model | "Controller", "Service", "JPA", "Entity" | Spring Boot 3.x + Hexagonal Architecture 패턴 |
+| **tdd-workflow** | model | 검증 가능한 백엔드 로직 생성 시 | TDD Red→Green→Refactor 규율 (레이어별 테스트 배치) |
 | **quality-gate** | model | "품질 검증", "PR 준비", "배포 전 확인" | 4단계 등급(PASS/CONCERNS/REWORK/FAIL) 품질 검증 |
-| **grill-me** | user | "그릴", "심문해줘", "스펙 잡자", "기획 구체화" | 코드 작성 전 한 질문씩 심문하여 요구사항 명세 완성 |
-| **grill-with-docs** | user | "그릴 도큐", "도메인 심문", "용어 정리", "ADR 정리" | 도메인 모델/문서(CONTEXT.md·ADR)에 대조하며 심문, 결정 인라인 기록 |
+| **grill-me** | user | "그릴 해줘", "심문해줘", "스펙 잡자" | 기능 하나를 한 질문씩 심문해 스펙 완성 (파일 안 고침) |
+| **grill-with-docs** | user | "그릴 도큐", "도메인 심문", "용어 정리" | grill-me + CONTEXT.md/ADR 인라인 갱신 (파일 씀) |
 | **expert-panel** | user | "전문가 리뷰", "패널 리뷰", "다각도 검토" | 전문가 에이전트 병렬 리뷰 (트렌드 리서치 포함) |
 | **project-scaffolding** | user | "프로젝트 구조", "scaffolding", "모노레포" | 프로젝트 구조 설계 및 스캐폴딩 |
 | **load-testing** | user | "부하 테스트", "성능 테스트", "k6" | k6 기반 API 부하 테스트 스크립트 생성/실행 |
 | **continuous-learning** | user | "회고", "학습 기록", "패턴 저장" | 세션별 성공/실패 패턴 추출 → 지식 베이스 저장 |
 | **youtube-collector** | user | "유튜브 채널 등록", "영상 수집" | YouTube 채널 등록 → 영상 수집 → 자막 추출 |
-| **skill-creator** | user | "스킬 만들어", "skill 생성" | 새로운 Claude 스킬 생성 가이드 |
+| **skill-creator** | user | "스킬 만들어줘", "SKILL.md 작성" | 규약 기준 스킬 저작 (superpowers:writing-skills와 구분) |
 | **slash-command-creator** | user | "커맨드 만들어", "command 생성" | 새로운 슬래시 커맨드 생성 가이드 |
 | **hook-creator** | user | "훅 만들어", "hook 설정" | Claude Code 훅 생성/설정 가이드 |
 
@@ -100,8 +99,8 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 
 **`/agent-teams` 프리셋**:
 - `review` — code-reviewer + security-sentinel + debugger (PR 전 종합 리뷰)
-- `fullstack` — backend-architect + code-reviewer + security-sentinel (설계 검증)
-- `quality` — code-reviewer + security-sentinel + load-testing (릴리스 전)
+- `fullstack` — expert-backend-architect + code-reviewer + security-sentinel (설계 검증)
+- `quality` — code-reviewer + security-sentinel + performance-profiler (릴리스 전)
 - `debug` — debugger + code-reviewer (복잡한 버그)
 
 ### Jira 연동
@@ -148,8 +147,8 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 ### 수동 단계별 개발
 ```
 /jira:start LAD-42          # 티켓 시작 + 브랜치
-@backend-architect           # 아키텍처 설계 (tdd-workflow 자동 활성화)
-... 구현 ...                 # spring-boot-expert 자동 활성화
+@expert-backend-architect    # 아키텍처 설계 (tdd-workflow 자동 활성화)
+... 구현 ...                 # kotlin.md + kotlin-spring.md 가이드 적용
 /jira:commit LAD-42          # 중간 커밋
 @code-reviewer               # 코드 리뷰
 @security-sentinel           # 보안 점검
@@ -180,7 +179,7 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 
 ### 세션 종료 시
 ```
-회고 기록해줘                  # continuous-learning 자동 활성화
+회고 기록해줘                  # continuous-learning 호출 (사용자 명시 요청)
 ```
 
 ---
@@ -195,7 +194,8 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 │   └── skill-invocation-tiers.md  # 스킬 호출 계층 규약
 ├── hooks/
 │   ├── guardrail-bash.sh        # 파괴적 Bash 명령 차단
-│   └── guardrail-skill.py       # user-invoked 자동 발동 경고
+│   ├── guardrail-skill.py       # user-invoked 자동 발동 경고
+│   └── guardrail-websearch.py   # 아키텍처 가이드 우선 규칙 주입
 ├── settings.local.json          # 로컬 권한 설정
 ├── agents/
 │   ├── code-reviewer.md         # 코드 리뷰 에이전트
@@ -218,7 +218,6 @@ model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-
 │       └── complete.md          # PR + 완료 (절차 원본)
 ├── skills/
 │   ├── tdd-workflow/            # TDD 개발 가이드          [model]
-│   ├── spring-boot-expert/      # Spring Boot 패턴          [model]
 │   ├── quality-gate/            # 품질 게이트               [model]
 │   ├── grill-me/                # 요구사항 심문             [user]
 │   ├── grill-with-docs/         # 도메인 심문 + 문서 갱신    [user]

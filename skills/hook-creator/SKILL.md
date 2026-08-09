@@ -1,6 +1,6 @@
 ---
 name: hook-creator
-description: Create and configure Claude Code hooks for customizing agent behavior. Use when the user wants to (1) create a new hook, (2) configure automatic formatting, logging, or notifications, (3) add file protection or custom permissions, (4) set up pre/post tool execution actions, or (5) asks about hook events like PreToolUse, PostToolUse, Notification, etc.
+description: Claude Code 훅 저작 도구. (1) 새 훅 생성, (2) 자동 포맷·로깅·알림 설정, (3) 파일 보호·권한 커스텀, (4) PreToolUse/PostToolUse 등 훅 이벤트 문의에 사용. "훅 만들어줘", "hook 설정", "자동으로 실행되게 해줘" 요청에 반응. 주의 — PreToolUse의 stdout 평문은 모델에게 전달되지 않으므로 모델에게 보낼 내용은 hookSpecificOutput.additionalContext JSON으로 내보낸다.
 metadata:
   invocation: user-invoked
 ---

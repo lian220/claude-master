@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
+description: 이 저장소 규약 기준으로 스킬을 만들고 고치는 저작 도구. (1) 새 SKILL.md 작성(구조·frontmatter·호출 계층 선언), (2) 기존 스킬 수정, (3) quick_validate.py 검증, (4) 패키징에 사용. "스킬 만들어줘", "SKILL.md 작성", "skill 생성", "스킬 검증" 요청에 반응. superpowers:writing-skills와 구분 — 이 저장소의 invocation tiers 규약과 검증기를 따르는 스킬은 반드시 이쪽을 쓴다.
 license: Complete terms in LICENSE.txt
 metadata:
   invocation: user-invoked

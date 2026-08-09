@@ -1,25 +1,25 @@
 ---
 name: grill-with-docs
-description: 계획/설계를 기존 도메인 모델과 문서(CONTEXT.md 용어집, ADR)에 대조하며 심문하고, 결정이 굳어질 때마다 문서를 인라인으로 갱신하는 강화판 그릴 스킬. "그릴 도큐", "도메인 심문", "용어 정리", "유비쿼터스 언어", "ADR 정리", "컨텍스트 맵", "grill with docs" 키워드에 반응. DDD/Hexagonal 프로젝트에서 용어를 날카롭게 다듬고 결정을 기록할 때 사용.
+description: grill-me의 도메인 강화판. 심문 과정에서 CONTEXT.md 용어집과 docs/adr/를 그 자리에서 갱신한다(파일 쓰기 발생). "그릴 도큐", "도메인 심문", "용어 정리하면서 캐물어줘", "유비쿼터스 언어", "ADR 남기면서 설계하자", "grill with docs"처럼 문서 갱신까지 명시 요청할 때만. 문서를 건드리지 않는 순수 심문은 grill-me.
 metadata:
   invocation: user-invoked
 ---
 
 > **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
-<what-to-do>
+# Grill with Docs
 
-계획의 모든 측면에 대해 공유된 이해에 도달할 때까지 끈질기게 심문한다. 설계 트리의 각 분기를 따라 내려가며, 결정 간 의존성을 하나씩 해소한다. 각 질문마다 내 추천 답을 함께 제시한다.
+## 심문 코어 — 절차 참조
 
-**질문은 한 번에 하나씩 하고, 각 질문에 대한 피드백을 받은 뒤에만 다음으로 넘어간다.**
+**`~/.claude/skills/grill-me/SKILL.md`의 프로세스(출발점 파악 → 한 번에 하나의 질문 →
+추천 답 동반 → 코드베이스 자체 탐색 → 스펙 산출)를 읽고 그대로 수행한다.**
+심문 절차를 여기에 복제하지 않는다 — 원본이 바뀌면 갈라진다.
 
-코드베이스를 탐색해 답할 수 있는 질문이면, 묻지 말고 직접 탐색한다.
+이 스킬이 **추가**하는 것은 두 가지뿐이다: 심문 중 (1) CONTEXT.md 용어집 대조·갱신,
+(2) ADR 판단·기록.
 
-> 이 저장소 환경 참고: Kotlin/Spring(Hexagonal), TypeScript/React 작업이면 `~/.claude/architecture-guides/`의 해당 가이드를 먼저 읽고, 레이어·경계 관련 추천 답을 가이드 기준으로 잡는다.
-
-</what-to-do>
-
-<supporting-info>
+> Kotlin/Spring(Hexagonal), TypeScript/React 작업이면 `~/.claude/architecture-guides/`의
+> 해당 가이드를 먼저 읽고, 레이어·경계 관련 추천 답을 가이드 기준으로 잡는다.
 
 ## 도메인 인식
 
@@ -77,7 +77,7 @@ metadata:
 
 ### CONTEXT.md를 인라인으로 갱신
 
-용어가 해소되면 바로 그 자리에서 `CONTEXT.md`를 갱신한다. 모아뒀다 처리하지 말고 발생 즉시 기록한다. 형식은 [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) 참조.
+용어가 해소되면 바로 그 자리에서 `CONTEXT.md`를 갱신한다. 모아뒀다 처리하지 말고 발생 즉시 기록한다. 형식은 [references/CONTEXT-FORMAT.md](references/CONTEXT-FORMAT.md) 참조.
 
 `CONTEXT.md`는 구현 디테일이 전혀 없어야 한다. 스펙·스크래치패드·구현 결정 저장소로 다루지 않는다. 그것은 **용어집(glossary)일 뿐이다.**
 
@@ -89,6 +89,4 @@ metadata:
 2. **맥락 없이는 놀랍다** — 미래의 독자가 "왜 이렇게 했지?"라고 의아해할 것이다
 3. **진짜 트레이드오프의 결과다** — 실제 대안이 있었고 특정 이유로 하나를 골랐다
 
-셋 중 하나라도 빠지면 ADR을 건너뛴다. 형식은 [ADR-FORMAT.md](./ADR-FORMAT.md) 참조.
-
-</supporting-info>
+셋 중 하나라도 빠지면 ADR을 건너뛴다. 형식은 [references/ADR-FORMAT.md](references/ADR-FORMAT.md) 참조.

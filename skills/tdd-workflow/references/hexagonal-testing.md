@@ -3,11 +3,14 @@
 ## 레이어별 테스트 방식
 
 ```
-Domain Service  → 순수 단위 테스트 (Port를 mock)
-UseCase         → Port를 mock한 통합 테스트
+Domain Service  → 순수 단위 테스트 (Port는 인메모리 Fake로 대체)
+UseCase         → 인메모리 Fake Port 기반 테스트
 Controller      → MockMvc로 API 테스트
 Repository      → @DataJpaTest로 DB 연동 테스트
 ```
+
+> 테스트 대역은 **Fake > Mock** (`~/.claude/architecture-guides/kotlin.md` §6).
+> 인메모리 구현을 우선하고, mock 프레임워크는 Fake로 표현할 수 없을 때만 쓴다.
 
 ## 테스트 우선순위
 

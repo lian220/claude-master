@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: 아이디어/기능/스펙을 코드 작성 전에 한 질문씩 끈질기게 심문하여 완전한 요구사항 명세를 만드는 스킬. "그릴", "grill me", "심문해줘", "기획 구체화", "스펙 잡자", "요구사항 정리", "헛점 찾아줘", "plan this", "spec this out" 키워드에 반응. 코드 작성 전 명세 부재로 인한 실패를 막는다.
+description: 기능 하나를 코드 작성 전에 한 질문씩 끈질기게 심문하여 완전한 요구사항 스펙을 만드는 스킬. 최종 스펙 문서 외에는 파일을 고치지 않는다. "그릴 해줘", "grill me", "심문해줘", "스펙 잡자", "요구사항 정리", "헛점 찾아줘"처럼 심문을 직접 요청할 때만. 경계 — 서비스 전체 0→1 기획은 /mvp, 용어집·ADR까지 갱신하려면 grill-with-docs, 발산적 아이디어 탐색은 superpowers:brainstorming(요구사항 수렴 심문은 이 스킬).
 metadata:
   invocation: user-invoked
 ---

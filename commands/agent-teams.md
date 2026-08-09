@@ -29,7 +29,7 @@ $ARGUMENTS
 ### `fullstack` — 풀스택 분석 팀
 ```
 병렬 실행:
-├── @backend-architect → 백엔드 아키텍처 분석
+├── @expert-backend-architect → 백엔드 아키텍처 분석
 ├── @code-reviewer     → 코드 품질 리뷰
 └── @security-sentinel → 보안 감사
 ```
@@ -38,9 +38,9 @@ $ARGUMENTS
 ### `quality` — 품질 검증 팀
 ```
 병렬 실행:
-├── @code-reviewer     → 코드 품질
-├── @security-sentinel → 보안
-└── (load-testing)     → 성능 기준 확인
+├── @code-reviewer          → 코드 품질
+├── @security-sentinel      → 보안
+└── @performance-profiler   → 성능 기준 확인
 ```
 **사용 시점**: 릴리스 전 종합 품질 검증
 

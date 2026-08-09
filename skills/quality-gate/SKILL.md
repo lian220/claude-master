@@ -21,12 +21,17 @@ metadata:
 ## 게이트 체크리스트
 
 ### Gate 1: 빌드 & 테스트
-```bash
-# Backend
-cd backend && ./gradlew clean build test --no-daemon
 
-# Frontend (변경 시)
-cd frontend && npm run lint && npm run build
+**앞선 단계(jira:complete 7.5 등)의 테스트 결과가 있으면 그것을 쓴다. 아래 명령은
+결과가 없을 때만 실행하는 fallback이다** (재실행 금지 — 하단 표 참조).
+
+```bash
+# 빌드 도구는 프로젝트에서 감지한다 (build.gradle.kts → gradle / package.json → npm)
+# Backend 예시
+./gradlew clean build test --no-daemon
+
+# Frontend 예시 (변경 시)
+npm run lint && npm run build
 ```
 - [ ] 빌드 성공
 - [ ] 전체 테스트 통과

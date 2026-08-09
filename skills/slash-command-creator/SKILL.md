@@ -1,6 +1,6 @@
 ---
 name: slash-command-creator
-description: Guide for creating Claude Code slash commands. Use when the user wants to create a new slash command, update an existing slash command, or asks about slash command syntax, frontmatter options, or best practices.
+description: Claude Code 슬래시 커맨드 저작 도구. 새 커맨드 작성, 기존 커맨드 수정, frontmatter 옵션(allowed-tools, argument-hint, disable-model-invocation 등) 문의에 사용. "커맨드 만들어줘", "슬래시 커맨드 작성", "command 생성" 요청에 반응. 커맨드는 정의상 user-invoked이며 다른 커맨드를 호출하지 않는다(절차 참조로 해결).
 metadata:
   invocation: user-invoked
 ---
@@ -104,7 +104,7 @@ See [references/frontmatter.md](references/frontmatter.md) for detailed referenc
 - 커맨드는 다른 커맨드나 user-invoked 스킬을 **호출하지 않는다.**
 - 다만 **절차를 복제하지도 않는다.** 같은 절차가 필요하면 원본 파일을 지정해 "그 파일을 읽고 그대로 수행하라"고 쓴다(절차 참조). 복제본은 원본이 바뀔 때 조용히 갈라진다. (`/dev-cycle`이 `~/.claude/commands/jira/start.md`의 단계 0~2를 읽어 스스로 수행하는 방식)
 - 에이전트가 필요하면 Agent 도구로 직접 호출한다.
-- model-invoked 스킬(`tdd-workflow`, `spring-boot-expert`, `quality-gate`)은 자유롭게 끌어다 쓸 수 있다.
+- model-invoked 스킬(`tdd-workflow`, `quality-gate`)은 자유롭게 끌어다 쓸 수 있다.
 
 예외적으로 모델이 자유롭게 불러도 되는 커맨드만 명시적으로 opt-out 한다.
 

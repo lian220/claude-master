@@ -115,7 +115,6 @@ disable-model-invocation: true
 | 대상 | 근거 |
 |------|------|
 | `tdd-workflow` | 구현할 때 항상 적용되어야 할 규율 |
-| `spring-boot-expert` | 코드를 쓸 때 참조하는 패턴 가이드 |
 | `quality-gate` | 검증 단계에서 오케스트레이터가 끌어다 쓰는 체크리스트 |
 
 ## 새 스킬을 만들 때

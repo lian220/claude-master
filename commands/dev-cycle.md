@@ -35,7 +35,7 @@ main/develop pull, 티켓 상태 전환 조건이 모두 그 파일에 있다.
 
 수행 후 추가로: **AC(수락 조건) 추출** → 이후 단계에서 검증 기준으로 사용
 
-### 1-2. 아키텍처 설계 (@backend-architect)
+### 1-2. 아키텍처 설계 (@expert-backend-architect)
 1. AC 기반으로 Hexagonal Architecture 설계:
    - **변경 범위 파악**: domain → application → infrastructure → presentation
    - **새로 추가/수정할 파일 목록** 도출
