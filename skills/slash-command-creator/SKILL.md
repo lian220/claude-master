@@ -1,7 +1,11 @@
 ---
 name: slash-command-creator
 description: Guide for creating Claude Code slash commands. Use when the user wants to create a new slash command, update an existing slash command, or asks about slash command syntax, frontmatter options, or best practices.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Slash Command Creator
 
@@ -90,6 +94,30 @@ Compare @$1 with @$2.
 | `disable-model-invocation`| Prevent SlashCommand tool invocation   | No       |
 
 See [references/frontmatter.md](references/frontmatter.md) for detailed reference.
+
+## 호출 계층 (이 저장소 규약)
+
+**커맨드는 정의상 전부 user-invoked다.** 사용자가 타이핑해야 실행되는 것이 슬래시 커맨드의 존재 이유이므로 별도 표기를 하지 않는다. 전문: `docs/skill-invocation-tiers.md`
+
+따라야 할 규칙:
+
+- 커맨드는 다른 커맨드나 user-invoked 스킬을 **호출하지 않는다.**
+- 다만 **절차를 복제하지도 않는다.** 같은 절차가 필요하면 원본 파일을 지정해 "그 파일을 읽고 그대로 수행하라"고 쓴다(절차 참조). 복제본은 원본이 바뀔 때 조용히 갈라진다. (`/dev-cycle`이 `~/.claude/commands/jira/start.md`의 단계 0~2를 읽어 스스로 수행하는 방식)
+- 에이전트가 필요하면 Agent 도구로 직접 호출한다.
+- model-invoked 스킬(`tdd-workflow`, `spring-boot-expert`, `quality-gate`)은 자유롭게 끌어다 쓸 수 있다.
+
+예외적으로 모델이 자유롭게 불러도 되는 커맨드만 명시적으로 opt-out 한다.
+
+```yaml
+metadata:
+  invocation: model-invoked
+```
+
+모델이 절대 못 부르게 하드 차단하려면 네이티브 필드를 쓴다. 단 자연어 요청까지 막히므로 사용자가 매번 슬래시 커맨드를 타이핑해야 한다.
+
+```yaml
+disable-model-invocation: true
+```
 
 ## Examples
 

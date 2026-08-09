@@ -1,7 +1,11 @@
 ---
 name: quality-gate
-description: 4단계 품질 게이트 시스템. 코드 변경, PR 생성, 배포 전 품질 검증 자동 적용. "품질 검증", "quality check", "배포 전 확인", "PR 준비" 키워드에 반응. /dev-cycle 3단계, /jira:complete 실행 시 자동 연동.
+description: 4단계 품질 게이트 시스템. 빌드·테스트/코드품질/보안/아키텍처를 판정해 PASS·CONCERNS·REWORK·FAIL 등급을 매기고, REWORK 이상이면 PR 생성을 차단한다. "품질 검증", "quality check", "배포 전 확인", "PR 준비" 키워드에 반응. /jira:complete 단계 8에서 적용되며 /dev-cycle 은 이를 절차 참조로 물려받는다. 이미 실행된 테스트·리뷰 결과를 재사용하고 재실행하지 않는다.
+metadata:
+  invocation: model-invoked
 ---
+
+> **호출 계층: model-invoked** — 작업 성격에 맞으면 모델이 스스로 적용하는 재사용 규율. user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Quality Gate System
 
@@ -84,7 +88,21 @@ Gate 결과 수집:
 [등급에 따른 다음 행동 안내]
 ```
 
-## 연동
-- `/dev-cycle` 3단계에서 자동 실행
-- `/jira:complete` 실행 시 Gate 1 자동 검증
-- `/agent-teams quality` 프리셋과 연동
+## 호출자
+
+이 스킬은 model-invoked 재사용 규율이다. **스스로 발동하지 않고 오케스트레이터가 끌어다 쓴다.**
+
+- `/jira:complete` **단계 8**에서 적용된다. 등급이 `REWORK`/`FAIL`이면 PR 생성이 차단된다.
+- `/dev-cycle` 3단계는 `complete.md` 단계 7.5~9를 절차 참조하므로 위 판정을 그대로 물려받는다.
+  별도로 한 번 더 판정하지 않는다.
+
+## 재실행 금지
+
+**이 스킬은 판정자이지 재실행자가 아니다.** 이미 실행된 검사를 다시 돌리지 않는다.
+
+| Gate | 결과를 어디서 가져오나 |
+|------|----------------------|
+| Gate 1 (빌드·테스트) | `jira:complete` 단계 7.5의 테스트 결과 |
+| Gate 2~4 (품질·보안·아키텍처) | 앞서 실행한 `@code-reviewer` / `@security-sentinel` 결과 |
+
+해당 결과가 없을 때만 직접 검사한다. 있는데도 다시 돌리면 `./gradlew test`가 두 번 실행된다.

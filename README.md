@@ -41,23 +41,46 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 
 ---
 
+## 스킬 호출 계층 (Invocation Tiers)
+
+스킬이 **언제 발동할지 예측 가능하게** 만들기 위한 규약입니다. 규약 전문: [docs/skill-invocation-tiers.md](docs/skill-invocation-tiers.md)
+
+| 계층 | 의미 | 발동 조건 |
+|------|------|-----------|
+| **user-invoked** | 오케스트레이터. 사용자 시간·토큰·외부 부작용을 요구 | 사용자가 `/커맨드`를 직접 입력했거나 명시 요청했을 때만 |
+| **model-invoked** | 재사용 규율. 작업 성격에 맞으면 알아서 적용 | 모델이 판단해서 자유롭게 |
+
+```
+user-invoked  ──▶ model-invoked   ✅        user-invoked  ──▶ user-invoked   ❌
+model-invoked ──▶ model-invoked   ✅        model-invoked ──▶ user-invoked   ❌
+```
+
+- **커맨드는 정의상 전부 user-invoked**입니다. 오케스트레이터끼리 겹쳐 부르지 않습니다.
+- 다른 스킬의 `references/*.md`를 데이터로 읽거나 문서에서 언급하는 것은 호출이 아닙니다.
+- user-invoked끼리 기능이 필요하면 스킬 대신 **Agent 도구로 에이전트를 직접 호출**합니다.
+- 각 `SKILL.md`는 프론트매터에 `metadata.invocation`을 선언하고, 본문 최상단에 계층을 명시합니다. `quick_validate.py`가 둘의 존재와 **일치 여부**까지 검사하지만, **자동 실행되지는 않습니다** — 손으로 만든 SKILL.md는 우회할 수 있습니다.
+- `hooks/guardrail-skill.py`(PreToolUse/Skill)가 user-invoked 자동 발동 시 **경고**합니다. 차단은 하지 않습니다 — 사용자가 자연어로 명시 요청한 경우도 Skill 툴을 타기 때문입니다.
+- 경고는 반드시 JSON `hookSpecificOutput.additionalContext`로 나갑니다. **PreToolUse의 stdout 평문은 모델에게 전달되지 않습니다**(컨텍스트가 되는 이벤트는 `UserPromptSubmit`/`UserPromptExpansion`/`SessionStart`뿐). 훅을 고칠 때 이 점을 반드시 유지하세요.
+
+---
+
 ## Skills (스킬)
 
-컨텍스트 키워드에 의해 **자동 활성화**되는 전문 가이드입니다.
-
-| 스킬 | 트리거 키워드 | 설명 |
-|------|-------------|------|
-| **grill-me** | "그릴", "심문해줘", "스펙 잡자", "기획 구체화" | 코드 작성 전 한 질문씩 심문하여 요구사항 명세 완성 |
-| **grill-with-docs** | "그릴 도큐", "도메인 심문", "용어 정리", "ADR 정리" | 도메인 모델/문서(CONTEXT.md·ADR)에 대조하며 심문, 결정 인라인 기록 |
-| **tdd-workflow** | "구현해줘", "만들어줘", "추가해줘" | TDD Red→Green→Refactor 3단계 개발 가이드 |
-| **spring-boot-expert** | "Controller", "Service", "JPA", "Entity" | Spring Boot 3.x + Hexagonal Architecture 패턴 |
-| **load-testing** | "부하 테스트", "성능 테스트", "k6" | k6 기반 API 부하 테스트 스크립트 생성/실행 |
-| **quality-gate** | "품질 검증", "PR 준비", "배포 전 확인" | 4단계 등급(PASS/CONCERNS/REWORK/FAIL) 품질 검증 |
-| **continuous-learning** | "회고", "학습 기록", "패턴 저장" | 세션별 성공/실패 패턴 추출 → 지식 베이스 저장 |
-| **youtube-collector** | "유튜브 채널 등록", "영상 수집" | YouTube 채널 등록 → 영상 수집 → 자막 추출 |
-| **skill-creator** | "스킬 만들어", "skill 생성" | 새로운 Claude 스킬 생성 가이드 |
-| **slash-command-creator** | "커맨드 만들어", "command 생성" | 새로운 슬래시 커맨드 생성 가이드 |
-| **hook-creator** | "훅 만들어", "hook 설정" | Claude Code 훅 생성/설정 가이드 |
+| 스킬 | 계층 | 트리거 키워드 | 설명 |
+|------|------|-------------|------|
+| **tdd-workflow** | model | "구현해줘", "만들어줘", "추가해줘" | TDD Red→Green→Refactor 3단계 개발 가이드 |
+| **spring-boot-expert** | model | "Controller", "Service", "JPA", "Entity" | Spring Boot 3.x + Hexagonal Architecture 패턴 |
+| **quality-gate** | model | "품질 검증", "PR 준비", "배포 전 확인" | 4단계 등급(PASS/CONCERNS/REWORK/FAIL) 품질 검증 |
+| **grill-me** | user | "그릴", "심문해줘", "스펙 잡자", "기획 구체화" | 코드 작성 전 한 질문씩 심문하여 요구사항 명세 완성 |
+| **grill-with-docs** | user | "그릴 도큐", "도메인 심문", "용어 정리", "ADR 정리" | 도메인 모델/문서(CONTEXT.md·ADR)에 대조하며 심문, 결정 인라인 기록 |
+| **expert-panel** | user | "전문가 리뷰", "패널 리뷰", "다각도 검토" | 전문가 에이전트 병렬 리뷰 (트렌드 리서치 포함) |
+| **project-scaffolding** | user | "프로젝트 구조", "scaffolding", "모노레포" | 프로젝트 구조 설계 및 스캐폴딩 |
+| **load-testing** | user | "부하 테스트", "성능 테스트", "k6" | k6 기반 API 부하 테스트 스크립트 생성/실행 |
+| **continuous-learning** | user | "회고", "학습 기록", "패턴 저장" | 세션별 성공/실패 패턴 추출 → 지식 베이스 저장 |
+| **youtube-collector** | user | "유튜브 채널 등록", "영상 수집" | YouTube 채널 등록 → 영상 수집 → 자막 추출 |
+| **skill-creator** | user | "스킬 만들어", "skill 생성" | 새로운 Claude 스킬 생성 가이드 |
+| **slash-command-creator** | user | "커맨드 만들어", "command 생성" | 새로운 슬래시 커맨드 생성 가이드 |
+| **hook-creator** | user | "훅 만들어", "hook 설정" | Claude Code 훅 생성/설정 가이드 |
 
 ---
 
@@ -104,6 +127,9 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 
 | 이벤트 | 대상 | 동작 |
 |--------|------|------|
+| PreToolUse | `Bash` | 파괴적 명령 차단 (`hooks/guardrail-bash.sh`) |
+| PreToolUse | `Skill` | user-invoked 스킬 자동 발동 경고 (`hooks/guardrail-skill.py`) |
+| PreToolUse | `WebSearch/WebFetch` | 아키텍처 가이드 우선 규칙 주입 |
 | PostToolUse (Edit/Write) | `*.kt` | ktlint 자동 포맷 |
 | PostToolUse (Edit/Write) | `*.ts, *.tsx` | Prettier 자동 포맷 |
 
@@ -162,7 +188,12 @@ Date Click 프로젝트의 Claude Code 커스텀 설정 모음입니다.
 ```
 .claude/
 ├── README.md                    # 이 파일
-├── settings.json                # 훅 설정 (auto-format)
+├── settings.json                # 훅/권한 설정
+├── docs/
+│   └── skill-invocation-tiers.md  # 스킬 호출 계층 규약
+├── hooks/
+│   ├── guardrail-bash.sh        # 파괴적 Bash 명령 차단
+│   └── guardrail-skill.py       # user-invoked 자동 발동 경고
 ├── settings.local.json          # 로컬 권한 설정
 ├── agents/
 │   ├── code-reviewer.md         # 코드 리뷰 에이전트

@@ -2,7 +2,11 @@
 name: skill-creator
 description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
 license: Complete terms in LICENSE.txt
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Skill Creator
 
@@ -311,11 +315,36 @@ Write the YAML frontmatter with `name` and `description`:
   - Include all "when to use" information here - Not in the body. The body is only loaded after triggering, so "When to Use This Skill" sections in the body are not helpful to Claude.
   - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
 
-Do not include any other fields in YAML frontmatter.
+Do not include any other fields in YAML frontmatter, with one exception required by this repository (see below).
+
+###### 호출 계층 표기 (이 저장소 필수 규약)
+
+모든 스킬은 프론트매터에 호출 계층을 선언한다. 전문: `docs/skill-invocation-tiers.md`
+
+```yaml
+metadata:
+  invocation: user-invoked   # 또는 model-invoked
+```
+
+아래 중 **하나라도** 해당하면 `user-invoked`다. 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행되며, 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
+
+- 사용자에게 여러 차례 질문하며 대화를 끌고 간다
+- 서브에이전트를 여러 개 띄운다
+- 외부(네트워크·API·배포 대상)에 영향을 준다
+- 파일·설정·지식베이스에 영구 기록을 남긴다
+- 토큰을 크게 소모한다
+
+모두 아니고 "특정 작업을 할 때 지켜야 할 규율/패턴"에 가깝다면 `model-invoked`다.
 
 ##### Body
 
-Write instructions for using the skill and its bundled resources.
+본문 맨 위(첫 제목보다 앞)에 호출 계층 인용 블록을 넣는다. 훅이 없는 환경에서도 규약이 전달되는 최종 방어선이다.
+
+```markdown
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
+```
+
+Below that block, write instructions for using the skill and its bundled resources.
 
 ### Step 5: Packaging a Skill
 

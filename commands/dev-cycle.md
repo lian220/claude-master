@@ -22,11 +22,18 @@ $ARGUMENTS
 ## 1단계: 준비 + 설계
 
 ### 1-1. Jira 티켓 시작
-1. `jira:start $1`과 동일한 절차 실행:
-   - Jira 티켓 정보 조회 (mcp__atlassian__getJiraIssue)
-   - 티켓 상태 "진행 중"으로 전환
-   - feature 브랜치 생성 (형식: `feature/{티켓ID}-{제목-kebab-case}`)
-2. **AC(수락 조건) 추출** → 이후 단계에서 검증 기준으로 사용
+
+**절차 원본**: `~/.claude/commands/jira/start.md` 의 **단계 0 ~ 단계 2**
+
+그 파일을 읽고 거기 적힌 절차를 그대로 수행한다. 브랜치 생성 규칙(MANDATORY),
+main/develop pull, 티켓 상태 전환 조건이 모두 그 파일에 있다.
+
+> ⚠️ **이 절차를 여기에 복제하지 말 것.** 복제하면 원본이 바뀔 때 갈라져서
+> `/jira:start`로 딴 브랜치와 `/dev-cycle`로 딴 브랜치의 이름 규칙이 달라진다.
+> 원본 파일을 읽는 것은 참조이므로 규약상 허용된다. `/jira:start` 커맨드를
+> 대신 실행하는 것은 금지된다 (user-invoked 끼리 호출 불가).
+
+수행 후 추가로: **AC(수락 조건) 추출** → 이후 단계에서 검증 기준으로 사용
 
 ### 1-2. 아키텍처 설계 (@backend-architect)
 1. AC 기반으로 Hexagonal Architecture 설계:
@@ -133,21 +140,20 @@ $ARGUMENTS
   - 수정 후 `./gradlew test` 재확인
 - 이슈 없으면 이 단계 스킵
 
-### 3-3. 최종 테스트
-```bash
-cd backend && ./gradlew test --no-daemon
-```
-- 백엔드 전체 테스트 통과 확인
-- 프론트엔드 변경 시: `cd frontend && npm run lint && npm run build`
+### 3-3. 최종 테스트 + Jira 완료 처리
 
-### 3-4. Jira 완료 처리
-`jira:complete $1`과 동일한 절차:
-1. docs/ 문서 영향 분석 및 업데이트
-2. PR 생성 (gh cli)
-   - 제목: `[$1] {티켓 제목}`
-   - 본문: 변경사항 요약, 테스트 결과, AC 체크리스트
-3. Jira 티켓 상태 업데이트
-4. PR 링크를 Jira 티켓에 연결
+**절차 원본**: `~/.claude/commands/jira/complete.md` 의 **단계 7.5 ~ 단계 9**
+
+그 파일을 읽고 거기 적힌 절차를 그대로 수행한다. 다음이 모두 그 파일에 있다.
+
+- 단계 7.5 — PR 생성 전 필수 테스트 게이트 (실패 시 즉시 중단, PR 생성 금지)
+- 단계 8 — 최종 검증 (AC 체크리스트 검토)
+- 단계 8.5 — `docs/` 문서 영향 분석·갱신·신규 작성 기준
+- 단계 9 — push, PR 생성(제목 `[$1] {티켓 제목}`), Jira 상태 업데이트, PR 링크 연결
+
+> ⚠️ **이 절차를 여기에 복제하지 말 것.** 과거 복제본은 단계 7.5의 테스트 게이트와
+> 단계 8.5의 docs 관리 기준을 통째로 누락한 상태였다. 원본 파일을 읽는 것은
+> 참조이므로 허용되고, `/jira:complete` 커맨드를 대신 실행하는 것은 금지된다.
 
 ### 3단계 완료 출력
 ```
@@ -159,6 +165,7 @@ cd backend && ./gradlew test --no-daemon
 - Suggestion: N개
 
 🧪 최종 테스트: ✅ 전체 통과
+🚦 품질 게이트: PASS (Gate 1 ✅ / Gate 2 ✅ / Gate 3 ✅ / Gate 4 ✅)
 
 🔗 PR: {PR URL}
 🎫 Jira: {티켓 상태}
@@ -178,5 +185,5 @@ cd backend && ./gradlew test --no-daemon
 
 1. **테스트 없이 비즈니스 로직을 작성하지 않는다**
 2. **각 단계 사이에 반드시 사용자 확인을 받는다**
-3. **Critical 이슈가 있으면 PR을 생성하지 않는다**
+3. **품질 게이트 등급이 `REWORK`/`FAIL`이면 PR을 생성하지 않는다** (`quality-gate` 스킬이 판정. 3-3에서 참조하는 `complete.md` 단계 8에 규칙이 있다)
 4. **AC를 모두 충족해야 완료 처리한다**

@@ -68,6 +68,15 @@
             "command": "$HOME/.claude/hooks/guardrail-bash.sh"
           }
         ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/guardrail-skill.py"
+          }
+        ]
       }
     ],
     "PostToolUse": [

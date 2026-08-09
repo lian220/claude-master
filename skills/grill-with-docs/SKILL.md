@@ -1,7 +1,11 @@
 ---
 name: grill-with-docs
 description: 계획/설계를 기존 도메인 모델과 문서(CONTEXT.md 용어집, ADR)에 대조하며 심문하고, 결정이 굳어질 때마다 문서를 인라인으로 갱신하는 강화판 그릴 스킬. "그릴 도큐", "도메인 심문", "용어 정리", "유비쿼터스 언어", "ADR 정리", "컨텍스트 맵", "grill with docs" 키워드에 반응. DDD/Hexagonal 프로젝트에서 용어를 날카롭게 다듬고 결정을 기록할 때 사용.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 <what-to-do>
 

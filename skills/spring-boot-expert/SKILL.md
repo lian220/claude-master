@@ -1,7 +1,11 @@
 ---
 name: spring-boot-expert
 description: Spring Boot 3.x + Kotlin 전문가 스킬. Hexagonal Architecture, JPA, Security, REST API 패턴 가이드. Spring Boot 코드 작성, 설정, 패턴 적용 시 자동 활성화. "Controller", "Service", "Repository", "Entity", "JPA", "Security", "REST API" 키워드에 반응.
+metadata:
+  invocation: model-invoked
 ---
+
+> **호출 계층: model-invoked** — 작업 성격에 맞으면 모델이 스스로 적용하는 재사용 규율. user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Spring Boot 3.x + Kotlin Expert
 

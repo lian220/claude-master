@@ -1,7 +1,11 @@
 ---
 name: project-scaffolding
 description: 프로젝트 구조 설계 및 스캐폴딩 전문 스킬. 신규 프로젝트 초기화, 기존 프로젝트 리팩토링, 아키텍처 패턴 적용을 지원. Backend(Hexagonal, Clean Architecture, DDD), Frontend(Feature-based, Route-based), Monorepo(Turborepo, Gradle multi-module) 구조를 다룸. 코딩 컨벤션, 린팅, 포맷팅, Git Hooks, CI/CD 설정 포함. "프로젝트 구조", "scaffolding", "보일러플레이트", "코드 구조", "아키텍처 셋업", "project setup", "init project", "프로젝트 초기화", "디렉토리 구조", "패키지 구조", "모듈 구조", "monorepo", "모노레포" 키워드에 반응.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Project Scaffolding
 

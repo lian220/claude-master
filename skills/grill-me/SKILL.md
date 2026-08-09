@@ -1,7 +1,11 @@
 ---
 name: grill-me
 description: 아이디어/기능/스펙을 코드 작성 전에 한 질문씩 끈질기게 심문하여 완전한 요구사항 명세를 만드는 스킬. "그릴", "grill me", "심문해줘", "기획 구체화", "스펙 잡자", "요구사항 정리", "헛점 찾아줘", "plan this", "spec this out" 키워드에 반응. 코드 작성 전 명세 부재로 인한 실패를 막는다.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Grill Me
 
@@ -73,11 +77,12 @@ AI 개발 실패의 대부분은 모델이 코드를 못 짜서가 아니라 **�
 
 ## 다음 단계 연계
 
-명세 완료 후 사용자 의사에 따라:
+명세를 완료하면 아래를 **안내만 한다.** 직접 실행하지 않는다 — 전부 오케스트레이터이고,
+user-invoked 끼리는 서로 호출할 수 없다. 무엇을 실행할지는 사용자가 정한다.
 
 - `superpowers:writing-plans` — 스펙을 bite-sized 작업 계획으로 분해
 - `superpowers:brainstorming` — 더 발산적 탐색이 필요할 때
-- `/dev-cycle`, `/mvp` — 이 저장소의 기존 개발/기획 워크플로우로 인계
+- `/dev-cycle`, `/mvp` — 이 저장소의 기존 개발/기획 워크플로우
 
 ## 핵심 규칙
 

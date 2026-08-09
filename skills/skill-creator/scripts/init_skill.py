@@ -18,7 +18,16 @@ from pathlib import Path
 SKILL_TEMPLATE = """---
 name: {skill_name}
 description: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]
+metadata:
+  invocation: model-invoked
 ---
+
+> **호출 계층: model-invoked** — 작업 성격에 맞으면 모델이 스스로 적용하는 재사용 규율. user-invoked 스킬/커맨드를 호출하지 않는다.
+
+[TODO: 아래 중 하나라도 해당하면 위 두 곳을 모두 user-invoked 로 바꾸세요 —
+사용자와 여러 차례 대화 / 서브에이전트 다수 실행 / 외부(네트워크·API·배포 대상) 영향 /
+영구 기록 남김 / 토큰 대량 소모. 규약: docs/skill-invocation-tiers.md
+분류를 확정했으면 이 TODO 블록은 삭제하세요.]
 
 # {skill_title}
 

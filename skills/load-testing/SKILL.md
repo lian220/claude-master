@@ -1,7 +1,11 @@
 ---
 name: load-testing
 description: k6 기반 부하 테스트 스킬. API 성능 테스트 스크립트 생성, 실행, 결과 분석. "부하 테스트", "성능 테스트", "load test", "stress test", "k6" 키워드에 반응.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # k6 Load Testing
 

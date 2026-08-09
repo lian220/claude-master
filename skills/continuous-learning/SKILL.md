@@ -1,7 +1,11 @@
 ---
 name: continuous-learning
-description: 세션 학습 시스템. 작업 완료 후 성공/실패 패턴을 자동 추출하여 지식 베이스에 저장. "회고", "학습 기록", "패턴 저장", "lessons learned" 키워드에 반응. 세션 종료 시 자동 활성화 권장.
+description: 세션 학습 시스템. 작업 완료 후 성공/실패 패턴을 자동 추출하여 지식 베이스에 저장. "회고", "학습 기록", "패턴 저장", "lessons learned" 키워드에 반응. 세션 종료 시 사용자가 호출한다.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Continuous Learning System
 

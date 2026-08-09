@@ -4,7 +4,11 @@ description: >
   분야별 전문가 패널 병렬 리뷰 시스템. 최신 트렌드를 리서치한 뒤 전문가 관점에서 검토.
   "전문가 리뷰", "expert panel", "패널 리뷰", "다각도 검토", "종합 분석" 키워드에 반응.
   코드/설계/기획/화면을 여러 전문가 관점에서 동시에 검토할 때 사용.
+metadata:
+  invocation: user-invoked
 ---
+
+> **호출 계층: user-invoked** — 사용자가 직접 호출했거나 명시적으로 요청했을 때만 실행한다. 다른 user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # Expert Panel
 

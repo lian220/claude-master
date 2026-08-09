@@ -55,6 +55,40 @@ def validate_skill(skill_path):
     if 'description' not in frontmatter:
         return False, "Missing 'description' in frontmatter"
 
+    # 호출 계층 규약 (docs/skill-invocation-tiers.md)
+    INVOCATION_TIERS = {'user-invoked', 'model-invoked'}
+    metadata = frontmatter.get('metadata') or {}
+    if not isinstance(metadata, dict):
+        return False, "'metadata' must be a mapping"
+    invocation = metadata.get('invocation')
+    if invocation is None:
+        return False, (
+            "Missing 'metadata.invocation' in frontmatter. "
+            f"Declare one of: {', '.join(sorted(INVOCATION_TIERS))}. "
+            "See docs/skill-invocation-tiers.md"
+        )
+    if invocation not in INVOCATION_TIERS:
+        return False, (
+            f"Invalid 'metadata.invocation' value: {invocation!r}. "
+            f"Must be one of: {', '.join(sorted(INVOCATION_TIERS))}"
+        )
+
+    # 본문 최상단 인용 블록은 훅이 없는 환경의 최종 방어선이므로 함께 강제한다.
+    # frontmatter 는 model 인데 본문은 user 인 불일치가 가장 위험한 조용한 실패다.
+    body = content[match.end():]
+    declared = re.search(r'^>\s*\*\*호출 계층:\s*([a-z-]+)\*\*', body, re.MULTILINE)
+    if not declared:
+        return False, (
+            "Missing invocation tier callout at the top of the body. "
+            f"Add: > **호출 계층: {invocation}** — ... "
+            "See docs/skill-invocation-tiers.md"
+        )
+    if declared.group(1) != invocation:
+        return False, (
+            f"Invocation tier mismatch: frontmatter says {invocation!r} "
+            f"but body callout says {declared.group(1)!r}"
+        )
+
     # Extract name for validation
     name = frontmatter.get('name', '')
     if not isinstance(name, str):

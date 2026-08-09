@@ -1,7 +1,11 @@
 ---
 name: tdd-workflow
 description: TDD 기반 3단계 개발 워크플로우 가이드. 새로운 기능 구현, 코드 작성, 비즈니스 로직 추가, UseCase 구현, API 엔드포인트 개발 시 자동 적용. "구현해줘", "만들어줘", "추가해줘", "개발해줘" 키워드에 반응.
+metadata:
+  invocation: model-invoked
 ---
+
+> **호출 계층: model-invoked** — 작업 성격에 맞으면 모델이 스스로 적용하는 재사용 규율. user-invoked 스킬/커맨드를 호출하지 않는다.
 
 # TDD 기반 개발 워크플로우
 
